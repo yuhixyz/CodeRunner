@@ -1,8 +1,8 @@
-import { useState } from "react"
 import TextArea from "antd/es/input/TextArea"
 
-const OutputArea = () => {
-    const [outputText, setOutputText] = useState('')
+// eslint-disable-next-line react/prop-types
+const OutputArea = ({ outputText }) => {
+
     return (
         <>
             <h3>输出</h3>
@@ -14,14 +14,12 @@ const OutputArea = () => {
                 }}
                 readOnly
                 value={outputText}
-                onChange={e => setOutputText(e.target.value)}
             />
             <div
                 style={{
                     margin: '24px 0',
                 }}
             />
-            {outputText}
         </>
     );
 };

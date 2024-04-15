@@ -6,7 +6,6 @@ import { Divider } from 'antd'
 const App = () => {
     const [code, setCode] = useState('')
     const [inputText, setInputText] = useState('')
-    const [ouputText, setOutputText] = useState('')
 
     useEffect(() => {
         setCode(localStorage.getItem('code'))
@@ -31,8 +30,8 @@ const App = () => {
             />
             <Divider />
             <ResultCard
+                code={code}
                 inputText={inputText}
-                ouputText={ouputText}
                 handleInputChange={handleInputChange}
             />
         </div>
