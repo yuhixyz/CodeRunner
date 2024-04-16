@@ -1,4 +1,3 @@
-import { useState } from "react"
 import TextArea from "antd/es/input/TextArea"
 
 const InputArea = (props) => {

@@ -8,22 +8,28 @@ import { useEffect, useState } from 'react';
 // eslint-disable-next-line react/prop-types
 const CodeCard = ({ code, handleCodeChange }) => {
     const [keyboardHandler, setKeyboardHandler] = useState('vim')
+    const [mode, setMode] = useState('Vim')
 
     useEffect(() => {
-       setKeyboardHandler(localStorage.getItem('keyboardHandler'))
+        const localKeyboardHandler = localStorage.getItem('keyboardHandler')
+        setKeyboardHandler(localKeyboardHandler ? localKeyboardHandler : 'vim')
     }, [])
 
     const inputModeSwitch = () => {
         if (keyboardHandler == 'vim') {
-            setKeyboardHandler('standard')
-            localStorage.setItem('keyboardHandler', 'standard')
+            console.log(keyboardHandler)
+            setKeyboardHandler('')
+            setMode('Standard')
+            localStorage.setItem('keyboardHandler', '')
         } else {
+            console.log(keyboardHandler)
             setKeyboardHandler('vim')
+            setMode('Vim')
             localStorage.setItem('keyboardHandler', 'vim')
         }
     }
     return (
-        <Card title="Code Runner" extra={<Button onClick={inputModeSwitch}>{keyboardHandler}</Button>}>
+        <Card title="Code Runner" extra={<Button onClick={inputModeSwitch}>{mode}</Button>}>
             <AceEditor
                 width='92vw'
                 height='60vh'
