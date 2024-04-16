@@ -3,26 +3,27 @@ import AceEditor from 'react-ace'
 import { Button } from 'antd/es/radio';
 import 'ace-builds/src-noconflict/mode-c_cpp'
 import 'ace-builds/src-noconflict/keybinding-vim'
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // eslint-disable-next-line react/prop-types
 const CodeCard = ({ code, handleCodeChange }) => {
     const [keyboardHandler, setKeyboardHandler] = useState('vim')
     const [mode, setMode] = useState('Vim')
 
+    const editorRef = useRef(null)
+
     useEffect(() => {
         const localKeyboardHandler = localStorage.getItem('keyboardHandler')
         setKeyboardHandler(localKeyboardHandler ? localKeyboardHandler : 'vim')
+        editorRef.current.editor.focus();
     }, [])
 
     const inputModeSwitch = () => {
         if (keyboardHandler == 'vim') {
-            console.log(keyboardHandler)
             setKeyboardHandler('')
             setMode('Standard')
             localStorage.setItem('keyboardHandler', '')
         } else {
-            console.log(keyboardHandler)
             setKeyboardHandler('vim')
             setMode('Vim')
             localStorage.setItem('keyboardHandler', 'vim')
@@ -31,6 +32,7 @@ const CodeCard = ({ code, handleCodeChange }) => {
     return (
         <Card title="Code Runner" extra={<Button onClick={inputModeSwitch}>{mode}</Button>}>
             <AceEditor
+                ref={editorRef}
                 width='92vw'
                 height='60vh'
                 mode="c_cpp"
