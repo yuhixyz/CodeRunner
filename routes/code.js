@@ -2,7 +2,8 @@ const express = require('express');
 const codeRouter = express.Router();
 const { exec } = require('child_process');
 const fs = require('fs');
-const path = require('path')
+const path = require('path');
+const { clearTimeout } = require('timers');
 
 codeRouter.post('/run', (req, res) => {
     const code = req.body.code ? req.body.code : '';
@@ -40,17 +41,48 @@ codeRouter.post('/run', (req, res) => {
                 console.log(msg);
             });
 
-            exec(`g++ ${sourceCodePath} -o ${baseUrl}/${filename}`, (error, stdout, stderr) => {
+            let isResponseSent = false;
+
+            // 限制编译2s
+            const compileTimer = setTimeout(() => {
+                compileChild.kill('SIGKILL');
+                res.json({ "success": false, "type": "Compile Error", "data": "Compiler exceeded time limit" });
+                isResponseSent = true
+            }, 2000);
+
+            // 编译
+            const compileChild = exec(`g++ ${sourceCodePath} -o ${baseUrl}/${filename}`, (error, stdout, stderr) => {
+                clearTimeout(compileTimer);
                 if (error) {
-                    res.send({ "success": false, "type": "Compile Error", "data": stderr }); // 编译错误时返回错误信息
+                    if (!isResponseSent) {
+                        res.json({ "success": false, "type": "Compile Error", "data": error.message }); // 编译错误时返回错误信息
+                    }
                 } else {
-                    // 运行编译后的可执行文件
-                    exec(`${baseUrl}/${filename} < ${inputTextPath}`, (runError, runStdout, runStderr) => {
+                    // 限制运行3s
+                    const runTimer = setTimeout(() => {
+                        runChild.kill('SIGKILL');
+                        if (!isResponseSent) {
+                            isResponseSent = true;
+                            res.json({ "success": false, "type": "Time Limit Exceeded", "data": "" })
+                        }
+                    }, 3000);
+
+                    // 运行
+                    const runChild = exec(`${baseUrl}/${filename} < ${inputTextPath}`, (runError, runStdout, runStderr) => {
+                        clearTimeout(runTimer);
                         if (runError) {
                             console.log(runError);
-                            res.send({ "success": false, "type": runStderr, "data": stderr }); // 运行错误时返回错误信息
+                            let errorType = 'Runtime Error'
+                            if (runError.message == 'stdout maxBuffer length exceeded') {
+                                errorType = 'Output Limit Exceeded'
+                            }
+                            if (!isResponseSent) {
+                                res.json({ "success": false, "type": errorType, "data": runStderr }); // 运行错误时返回错误信息
+                            }
                         } else {
-                            res.send({ "success": true, "type": "Finished", "data": runStdout });
+                            if (!isResponseSent) {
+                                res.json({ "success": true, "type": "Finished", "data": runStdout });
+                            }
                         }
                     });
                 }
