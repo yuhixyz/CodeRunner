@@ -16,15 +16,20 @@ const ResultCard = ({ code, inputText, handleInputChange }) => {
     const handleRunClick = async () => {
         setResultType('运行中')
         setIsRunDisabled(true)
-        const resp = await runCode(code, inputText)
-        setIsRunDisabled(false)
-        setResultType(resp['type'])
-        setOutputText(resp['data'])
+        try {
+            const resp = await runCode(code, inputText)
+            setIsRunDisabled(false)
+            setResultType(resp['type'])
+            setOutputText(resp['data'])
+        } catch (error) {
+            setIsRunDisabled(false)
+            setResultType(error.message)
+        }
     }
 
     return (
         <Card title={`代码运行状态：${resultType ? resultType : '--'}`}
-              extra={<Button type='primary' disabled={isRunDisabled} onClick={handleRunClick}>运行</Button>}>
+            extra={<Button type='primary' disabled={isRunDisabled} onClick={handleRunClick}>运行</Button>}>
             <InputArea
                 inputText={inputText}
                 handleInputChange={handleInputChange}

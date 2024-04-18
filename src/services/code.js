@@ -9,7 +9,9 @@ const runCode = async (code, inputText) => {
         "code": code,
         "inputText": inputText
     }
-    const response = await axios.post(baseUrl, requestParam)
+    const response = await axios.post(baseUrl, requestParam, {
+        timeout: 5000
+    })
     return response.data
 }
 
