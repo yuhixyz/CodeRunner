@@ -9,6 +9,7 @@ codeRouter.post('/run', (req, res) => {
     const code = req.body.code ? req.body.code : '';
     const inputText = req.body.inputText ? req.body.inputText : '';
     const baseUrl = path.join('source_cpp_codes');
+    if (!fs.existsSync(baseUrl)) fs.mkdirSync(baseUrl);
     const ip = req.headers['x-real-ip'] || req.connection.remoteAddress;
     const filename = ip.toString();
     const sourceCodePath = path.join(baseUrl, filename + '.cpp')
