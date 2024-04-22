@@ -7,12 +7,14 @@
 
 ```sh
 cd backend
+npm install
 npm run dev
 ```
 ## Frontend
 
 ```sh
 cd frontend
+npm install
 npm run dev
 ```
 
@@ -29,4 +31,4 @@ npm run build
 ## TODO
 + User Register/Login
 + Message Queue for Running Codes
-+ More languages Support
++ More Languages Support
