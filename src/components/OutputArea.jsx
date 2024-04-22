@@ -1,7 +1,7 @@
 import TextArea from "antd/es/input/TextArea"
 
 // eslint-disable-next-line react/prop-types
-const OutputArea = ({ outputText }) => {
+const OutputArea = ({ output }) => {
 
     return (
         <>
@@ -13,7 +13,7 @@ const OutputArea = ({ outputText }) => {
                     maxRows: 6,
                 }}
                 readOnly
-                value={outputText}
+                value={output}
             />
             <div
                 style={{

@@ -1,8 +1,7 @@
 import TextArea from "antd/es/input/TextArea"
 
-const InputArea = (props) => {
-    // eslint-disable-next-line react/prop-types
-    const { inputText, handleInputChange } = props
+// eslint-disable-next-line react/prop-types
+const InputArea = ({ input, handleInputChange }) => {
     return (
         <>
             <h3>输入</h3>
@@ -12,7 +11,7 @@ const InputArea = (props) => {
                     minRows: 1,
                     maxRows: 6,
                 }}
-                value={inputText}
+                value={input}
                 onChange={handleInputChange}
             />
             <div
@@ -23,4 +22,5 @@ const InputArea = (props) => {
         </>
     );
 };
+
 export default InputArea
