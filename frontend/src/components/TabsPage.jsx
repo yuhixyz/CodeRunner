@@ -96,7 +96,7 @@ const TabsPage = ({ keyboardHandler }) => {
                         keyboardHandler={keyboardHandler}
                         value={code}
                         onChange={(newCode) => handleCodeChange(newCode, id)}
-                        width='92vw'
+                        width='96vw'
                         height='60vh'
                         mode="c_cpp"
                         name="my-editor"
