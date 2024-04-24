@@ -45,8 +45,8 @@ const TabsPage = ({ keyboardHandler }) => {
 
     const [tabContents, setTabContents] = useState(initialContents);
 
-    const handleInputChange = (e, id) => {
-        const newInput = e.target.value;
+    const handleInputChange = (newInput, id) => {
+        // const newInput = e.target.value;
         const newTabContents = tabContents.map(item => {
             if (item.id === id) {
                 return {
@@ -96,7 +96,7 @@ const TabsPage = ({ keyboardHandler }) => {
                         keyboardHandler={keyboardHandler}
                         value={code}
                         onChange={(newCode) => handleCodeChange(newCode, id)}
-                        width='96vw'
+                        width='100%'
                         height='60vh'
                         mode="c_cpp"
                         name="my-editor"
