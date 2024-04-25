@@ -1,4 +1,4 @@
-import TextArea from "antd/es/input/TextArea"
+import TextArea from "antd/es/input/TextArea";
 
 // eslint-disable-next-line react/prop-types
 const InputArea = ({ input, handleInputChange }) => {
@@ -23,4 +23,4 @@ const InputArea = ({ input, handleInputChange }) => {
     );
 };
 
-export default InputArea
+export default InputArea;

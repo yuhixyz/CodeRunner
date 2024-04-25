@@ -1,4 +1,4 @@
-import TextArea from "antd/es/input/TextArea"
+import TextArea from "antd/es/input/TextArea";
 
 // eslint-disable-next-line react/prop-types
 const OutputArea = ({ output }) => {
@@ -23,4 +23,4 @@ const OutputArea = ({ output }) => {
         </>
     );
 };
-export default OutputArea
+export default OutputArea;

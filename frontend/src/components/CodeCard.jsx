@@ -5,7 +5,7 @@ import TabsPage from './TabsPage';
 
 // eslint-disable-next-line react/prop-types
 const CodeCard = () => {
-    const [keyboardHandler, setKeyboardHandler] = useState('')
+    const [keyboardHandler, setKeyboardHandler] = useState('');
 
     useEffect(() => {
         const localKeyboardHandler = localStorage.getItem('keyboardHandler');
@@ -14,13 +14,14 @@ const CodeCard = () => {
 
     const inputModeSwitch = () => {
         if (keyboardHandler === 'vim') {
-            setKeyboardHandler('')
-            localStorage.setItem('keyboardHandler', '')
+            setKeyboardHandler('');
+            localStorage.setItem('keyboardHandler', '');
         } else {
-            setKeyboardHandler('vim')
-            localStorage.setItem('keyboardHandler', 'vim')
+            setKeyboardHandler('vim');
+            localStorage.setItem('keyboardHandler', 'vim');
         }
-    }
+    };
+
     return (
         <Card title="Code Runner"
             extra={
@@ -28,7 +29,7 @@ const CodeCard = () => {
             }>
             <TabsPage keyboardHandler={keyboardHandler} />
         </Card>
-    )
-}
+    );
+};
 
-export default CodeCard
+export default CodeCard;
