@@ -1,0 +1,44 @@
+name: deploy
+
+on: push
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install dependencies
+    - run: |
+        cd frontend
+        npm install
+        npm run build
+        cp -r dist ../backend/dist
+        cd backend
+        npm install
+    
+    - name: Deploy code
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.TENCENT_HOST }}
+        username: ${{ secrets.TENCENT_USERNAME }}
+        key: ${{ secrets.TENCENT_KEY }}
+        port: ${{ secrets.TENCENT_PORT }}
+        source: "backend"
+        target: "~/code-runner"
+
+    - name: Start the server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.TENCENT_HOST }}
+        username: ${{ secrets.TENCENT_USERNAME }}
+        key: ${{ secrets.TENCENT_KEY }}
+        port: ${{ secrets.TENCENT_PORT }}
+        timeout: 1m
+        command_timeout: 1m
+        script_stop: true
+        script: |
+           cd ~/code-runner/backend
+           node index.js
+
+     
+
