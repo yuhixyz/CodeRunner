@@ -38,9 +38,11 @@ jobs:
           command_timeout: 1m
           script_stop: true
           script: |
-             cd ~/code-runner/backend
              port=3001; lsof -ti:$port | if [ $(wc -w) -gt 0 ]; then kill -9 $(lsof -ti:$port); fi
+             tmux a -t run
+             cd ~/code-runner/backend
              node index.js
+             tmux detach
 
      
 
