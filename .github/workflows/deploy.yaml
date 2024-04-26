@@ -14,7 +14,7 @@ jobs:
           npm install
           npm run build
           cp -r dist ../backend/dist
-          cd backend
+          cd ../backend
           npm install
     
       - name: Deploy code
