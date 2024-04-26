@@ -39,6 +39,7 @@ jobs:
           script_stop: true
           script: |
              cd ~/code-runner/backend
+             lsof -ti :${{ secrets.SERVICE_PORT }} | xargs kill
              node index.js
 
      
