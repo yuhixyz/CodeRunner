@@ -2,8 +2,8 @@ import { Divider, Tabs } from 'antd';
 import { useState, useEffect } from 'react';
 import ResultCard from './ResultCard';
 import AceEditor from 'react-ace';
-import 'ace-builds/src-noconflict/mode-c_cpp'
-import 'ace-builds/src-noconflict/keybinding-vim'
+import 'ace-builds/src-noconflict/mode-c_cpp';
+import 'ace-builds/src-noconflict/keybinding-vim';
 
 const initialContents = [
     {
@@ -36,7 +36,7 @@ const initialContents = [
         code: "",
         input: ""
     },
-]
+];
 
 // eslint-disable-next-line react/prop-types
 const TabsPage = ({ keyboardHandler }) => {
@@ -103,7 +103,7 @@ const TabsPage = ({ keyboardHandler }) => {
                         fontSize={14}
                     />
                     <Divider />
-                    <ResultCard code={code} input={input} handleInputChange={(e) => { handleInputChange(e, id) }} />
+                    <ResultCard code={code} input={input} handleInputChange={e => handleInputChange(e, id)} />
                 </>
             );
 
@@ -132,6 +132,6 @@ const TabsPage = ({ keyboardHandler }) => {
             items={items}
         />
     );
-}
+};
 
 export default TabsPage;

@@ -26,7 +26,8 @@ const CodeCard = () => {
         <Card title="Code Runner"
             extra={
                 <Button onClick={inputModeSwitch}>{keyboardHandler ? keyboardHandler : 'Standard'}</Button>
-            }>
+            }
+        >
             <TabsPage keyboardHandler={keyboardHandler} />
         </Card>
     );
