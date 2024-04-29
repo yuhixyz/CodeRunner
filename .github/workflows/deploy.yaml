@@ -42,7 +42,7 @@ jobs:
                   timeout: 1m
                   command_timeout: 1m
                   script_stop: true
-                  envs: PORT,ENV_FIEL_CONTENT,TEST_TEXT
+                  envs: PORT,ENV_FIEL_CONTENT,TEST_TEXT,SHA
                   script: |
                       echo "sha: $SHA"
                       echo "$TEST_TEXT"
