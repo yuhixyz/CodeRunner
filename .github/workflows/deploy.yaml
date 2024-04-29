@@ -30,7 +30,7 @@ jobs:
             - name: Start the server
               uses: appleboy/ssh-action@master
               env:
-                  PORT: ${{ secrets.SERVICE_PORT}}
+                  PORT: ${{ secrets.SERVICE_PORT }}
                   ENV_FILE_CONTENT: ${{ secrets.ENV_FILE_CONTENT }}
                   TEST_TEXT: "hello world"
               with:
