@@ -29,6 +29,10 @@ jobs:
 
       - name: Start the server
         uses: appleboy/ssh-action@master
+        env:
+          PORT: ${{ secrets.SERVICE_PORT}}
+          MONGODB_URI: ${{ secrets.MONGODB_URI}}
+          SECRET: ${{ secrets.JWT_SECRET}}
         with:
           host: ${{ secrets.TENCENT_HOST }}
           username: ${{ secrets.TENCENT_USERNAME }}
