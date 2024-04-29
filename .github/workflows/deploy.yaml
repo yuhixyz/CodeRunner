@@ -32,6 +32,7 @@ jobs:
               env:
                   PORT: ${{ secrets.SERVICE_PORT}}
                   ENV_FILE_CONTENT: ${{ secrets.ENV_FILE_CONTENT }}
+                  TEST_TEXT: "hello world"
               with:
                   host: ${{ secrets.TENCENT_HOST }}
                   username: ${{ secrets.TENCENT_USERNAME }}
@@ -40,8 +41,9 @@ jobs:
                   timeout: 1m
                   command_timeout: 1m
                   script_stop: true
-                  envs: PORT,ENV_FIEL_CONTENT
+                  envs: PORT,ENV_FIEL_CONTENT,TEST_TEXT
                   script: |
+                      echo "$TEST_TEXT"
                       echo $PORT
                       lsof -ti:$PORT | if [ $(wc -w) -gt 1 ]; then kill -9 $(lsof -ti:$PORT); fi
                       cd ~/code-runner/backend
