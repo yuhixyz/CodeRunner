@@ -40,7 +40,7 @@ jobs:
                   timeout: 1m
                   command_timeout: 1m
                   script_stop: true
-                  script: |
+                  run: |
                       echo "$PORT"
                       lsof -ti:"$PORT" | if [ $(wc -w) -gt 1 ]; then kill -9 $(lsof -ti:"$PORT"); fi
                       cd ~/code-runner/backend
