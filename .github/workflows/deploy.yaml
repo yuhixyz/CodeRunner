@@ -28,11 +28,12 @@ jobs:
                   target: "~/code-runner"
 
             - name: Start the server
-              uses: appleboy/ssh-action@v1.0.0
+              uses: appleboy/ssh-action@master
               env:
                   PORT: ${{ secrets.SERVICE_PORT }}
                   ENV_FILE_CONTENT: ${{ secrets.ENV_FILE_CONTENT }}
                   TEST_TEXT: "hello world"
+                  SHA: ${{ github.sha }}
               with:
                   host: ${{ secrets.TENCENT_HOST }}
                   username: ${{ secrets.TENCENT_USERNAME }}
@@ -43,6 +44,7 @@ jobs:
                   script_stop: true
                   envs: PORT,ENV_FIEL_CONTENT,TEST_TEXT
                   script: |
+                      echo "sha: $SHA"
                       echo "$TEST_TEXT"
                       echo "$PORT"
                       lsof -ti:"$PORT" | if [ $(wc -w) -gt 1 ]; then kill -9 $(lsof -ti:"$PORT"); fi
