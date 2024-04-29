@@ -31,8 +31,7 @@ jobs:
         uses: appleboy/ssh-action@master
         env:
           PORT: ${{ secrets.SERVICE_PORT}}
-          MONGODB_URI: ${{ secrets.MONGODB_URI}}
-          SECRET: ${{ secrets.JWT_SECRET}}
+          ENV_FILE_CONTENT: ${{ secrets.ENV_FILE_CONTENT }}
         with:
           host: ${{ secrets.TENCENT_HOST }}
           username: ${{ secrets.TENCENT_USERNAME }}
@@ -42,8 +41,9 @@ jobs:
           command_timeout: 1m
           script_stop: true
           script: |
-             port=3001; lsof -ti:$port | if [ $(wc -w) -gt 0 ]; then kill -9 $(lsof -ti:$port); fi
+             port="${PORT}"; lsof -ti:$port | if [ $(wc -w) -gt 0 ]; then kill -9 $(lsof -ti:$port); fi
              cd ~/code-runner/backend
+             echo "$ENV_FILE_CONTENT" > .env
              nohup node index.js > output.log 2>&1 &
 
      
