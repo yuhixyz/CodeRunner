@@ -28,7 +28,7 @@ jobs:
                   target: "~/code-runner"
 
             - name: Start the server
-              uses: appleboy/ssh-action@master
+              uses: appleboy/ssh-action@v1.0.3
               env:
                   PORT: ${{ secrets.SERVICE_PORT }}
                   ENV_FILE_CONTENT: ${{ secrets.ENV_FILE_CONTENT }}
