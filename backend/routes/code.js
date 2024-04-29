@@ -4,8 +4,34 @@ const { exec } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const { clearTimeout } = require('timers');
+const jwt = require('jsonwebtoken');
+
+const getToken = req => {
+    const authorization = req.get('authorization');
+    if (authorization && authorization.startsWith('Bearer ')) {
+        return authorization.replace('Bearer ', '');
+    }
+    return null;
+};
 
 codeRouter.post('/run', (req, res) => {
+    const token = getToken(req);
+    console.log(token);
+    const secretKey = process.env.SECRET;
+    try {
+        const decodedToken = jwt.verify(token, secretKey);
+        if (!decodedToken.id) {
+            res.status(401).json({ error: "invalid token1" });
+            // res.redirect('/api/user/login');
+            return;
+        }
+    } catch (exception) {
+        // console.log(exception.message);
+        res.status(401).json({ error: "invalid token2" });
+        // res.redirect('/api/user/login');
+        return;
+    }
+
     const code = req.body.code ? req.body.code : '';
     const inputText = req.body.inputText ? req.body.inputText : '';
     const baseUrl = path.join('source_cpp_codes');
