@@ -41,9 +41,9 @@ jobs:
           command_timeout: 1m
           script_stop: true
           script: |
-             port="${PORT}"; lsof -ti:$port | if [ $(wc -w) -gt 0 ]; then kill -9 $(lsof -ti:$port); fi
+             lsof -ti:$PORT | if [ $(wc -w) -gt 0 ]; then kill -9 $(lsof -ti:$PORT); fi
              cd ~/code-runner/backend
-             echo "$ENV_FILE_CONTENT" > .env
+             echo $ENV_FILE_CONTENT > .env
              nohup node index.js > output.log 2>&1 &
 
      
