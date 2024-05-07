@@ -5,13 +5,13 @@ import { useEffect } from 'react';
 const NotFound = () => {
 
     useEffect(() => {
-        // 创建script标签
         const script = document.createElement('script');
         script.src = "https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js";
         script.async = true;
         script.defer = true;
         script.crossOrigin = 'anonymous';
         document.body.appendChild(script);
+
         return () => {
             document.body.removeChild(script);
         };
